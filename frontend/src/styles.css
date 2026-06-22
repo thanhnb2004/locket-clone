@@ -1,0 +1,609 @@
+:root {
+  --bg: #0c0c0e;
+  --surface: #161618;
+  --surface-2: #202024;
+  --surface-3: #2a2a30;
+  --text: #f5f5f7;
+  --muted: #8e8e93;
+  --gold: #ffd45e;
+  --gold-dark: #f3b73b;
+  --danger: #ff5a5f;
+  --success: #34c759;
+  --radius: 28px;
+  --shell-max: 440px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: radial-gradient(120% 80% at 50% 0%, #1c1c22 0%, var(--bg) 60%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.full-loading {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--muted);
+}
+
+/* ---------- App shell (phone frame) ---------- */
+.app-shell {
+  position: relative;
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: linear-gradient(var(--bg), rgba(12, 12, 14, 0.85));
+  backdrop-filter: blur(8px);
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  font-size: 20px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 18px;
+}
+
+.content {
+  flex: 1;
+  padding: 8px 18px 110px;
+  overflow-y: auto;
+}
+
+/* ---------- Avatars ---------- */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #1a1a1a;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.avatar.small {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+}
+
+/* ---------- Bottom nav ---------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--shell-max);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px 24px calc(14px + env(safe-area-inset-bottom));
+  background: linear-gradient(rgba(12, 12, 14, 0), var(--bg) 40%);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  color: var(--text);
+}
+
+.nav-icon {
+  font-size: 22px;
+}
+
+.nav-capture .capture-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 4px solid var(--surface-3);
+  box-shadow: 0 6px 20px rgba(255, 212, 94, 0.35);
+  display: block;
+}
+
+.nav-capture.active .capture-dot {
+  border-color: var(--gold-dark);
+}
+
+/* ---------- Auth screens ---------- */
+.auth-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.logo-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #1a1a1a;
+  font-size: 38px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 30px rgba(255, 212, 94, 0.3);
+}
+
+.auth-title {
+  font-size: 30px;
+  margin: 0 0 6px;
+}
+
+.auth-subtitle {
+  color: var(--muted);
+  margin: 0 0 28px;
+  line-height: 1.4;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  color: var(--muted);
+}
+
+/* ---------- Form fields ---------- */
+.field {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 16px;
+  background: var(--surface-2);
+  border: 1px solid transparent;
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field:focus {
+  border-color: var(--gold);
+}
+
+.field::placeholder {
+  color: var(--muted);
+}
+
+.btn-primary {
+  padding: 15px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 16px;
+  transition: transform 0.08s, opacity 0.15s;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+}
+
+.btn-primary.compact {
+  padding: 12px 18px;
+}
+
+.btn-ghost {
+  padding: 13px 18px;
+  border-radius: 16px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.error-banner {
+  background: rgba(255, 90, 95, 0.15);
+  color: #ff8a8e;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.error-banner.success {
+  background: rgba(52, 199, 89, 0.15);
+  color: #5fdc83;
+}
+
+/* ---------- Page basics ---------- */
+.page-title {
+  font-size: 22px;
+  margin: 8px 2px 16px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.center {
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* ---------- Capture / viewfinder ---------- */
+.capture-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewfinder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+  margin-top: 6px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.viewfinder-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mirrored {
+  transform: scaleX(-1);
+}
+
+.cam-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 24px;
+}
+
+.cam-fallback-emoji {
+  font-size: 48px;
+}
+
+.viewfinder-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+}
+
+.moment-caption {
+  display: inline-flex;
+  max-width: 80%;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.moment-caption span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* capture controls */
+.capture-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 28px 24px 0;
+}
+
+.shutter {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: transparent;
+  border: 5px solid var(--gold);
+  display: grid;
+  place-items: center;
+  transition: transform 0.08s;
+}
+
+.shutter:active {
+  transform: scale(0.94);
+}
+
+.shutter:disabled {
+  border-color: var(--surface-3);
+}
+
+.shutter-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.gallery-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--surface-2);
+  font-size: 22px;
+}
+
+.control-spacer {
+  width: 52px;
+}
+
+/* compose after capture */
+.compose {
+  width: 100%;
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.caption-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: var(--surface-2);
+  border: none;
+  color: var(--text);
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+}
+
+.compose-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.compose-actions .btn-ghost {
+  flex: 1;
+}
+
+.send-btn {
+  flex: 2;
+}
+
+/* ---------- Feed ---------- */
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.moment-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.moment-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.moment-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.moment-photo .moment-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+}
+
+.moment-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.moment-who {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.moment-who .muted {
+  font-size: 13px;
+}
+
+.img-skeleton {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(110deg, var(--surface) 30%, var(--surface-2) 50%, var(--surface) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  color: var(--muted);
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 50px 16px;
+  color: var(--text);
+}
+
+.empty-emoji {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.empty p {
+  margin: 4px 0;
+}
+
+/* ---------- Friends ---------- */
+.add-friend {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.add-friend .field {
+  flex: 1;
+}
+
+.friend-section {
+  margin-top: 22px;
+}
+
+.section-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin: 0 2px 10px;
+}
+
+.friend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+
+.friend-name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-name .muted {
+  font-size: 13px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-accept {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--gold);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.btn-reject {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--surface-3);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.pending-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(255, 212, 94, 0.12);
+  padding: 6px 10px;
+  border-radius: 10px;
+}

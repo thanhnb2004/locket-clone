@@ -1,0 +1,25 @@
+# Maven
+backend/target/
+
+# Node / Vite (frontend)
+frontend/node_modules/
+frontend/dist/
+node_modules/
+
+# Uploads (legacy local file storage)
+backend/uploads/
+uploads/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

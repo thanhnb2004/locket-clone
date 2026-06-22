@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: locket-clone
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/locket}
+    username: ${SPRING_DATASOURCE_USERNAME:locket}
+    password: ${SPRING_DATASOURCE_PASSWORD:locket}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+
+server:
+  port: 8080
+
+app:
+  s3:
+    # Local dev points at MinIO. For AWS S3, leave endpoint/access-key/secret-key empty
+    # (use IAM role / default credentials chain) and set path-style-access to false.
+    endpoint: ${APP_S3_ENDPOINT:http://localhost:9000}
+    region: ${APP_S3_REGION:us-east-1}
+    bucket: ${APP_S3_BUCKET:locket-moments}
+    access-key: ${APP_S3_ACCESS_KEY:minioadmin}
+    secret-key: ${APP_S3_SECRET_KEY:minioadmin}
+    path-style-access: ${APP_S3_PATH_STYLE_ACCESS:true}
+
+logging:
+  level:
+    org.springframework.security: INFO
