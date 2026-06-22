@@ -57,6 +57,12 @@ export const api = {
       body: formData,
     }).then(handle),
 
+  del: (path) =>
+    fetch(`/api${path}`, {
+      method: 'DELETE',
+      headers: { ...authHeaders() },
+    }).then(handle),
+
   // Images need the auth header too, so fetch them as a blob and turn into an object URL.
   blob: (path) =>
     fetch(`/api${path}`, { headers: { ...authHeaders() } }).then((res) => {

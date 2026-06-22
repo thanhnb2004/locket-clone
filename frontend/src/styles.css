@@ -499,6 +499,100 @@ a {
   font-size: 13px;
 }
 
+/* --- Reactions --- */
+.reaction-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px;
+}
+
+.reaction-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 0.08s ease, background 0.15s ease;
+}
+
+.reaction-chip:active {
+  transform: scale(0.94);
+}
+
+.reaction-chip.mine {
+  background: rgba(255, 212, 94, 0.18);
+  box-shadow: inset 0 0 0 1px var(--gold-dark);
+}
+
+.reaction-chip:disabled {
+  cursor: default;
+}
+
+.reaction-count {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.reaction-chip.mine .reaction-count {
+  color: var(--gold);
+}
+
+.reaction-add-wrap {
+  position: relative;
+}
+
+.reaction-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.reaction-add:active {
+  transform: scale(0.94);
+}
+
+.reaction-picker {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+}
+
+.reaction-option {
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  padding: 4px;
+  border-radius: 999px;
+  transition: transform 0.08s ease;
+}
+
+.reaction-option:hover,
+.reaction-option.active {
+  transform: scale(1.25);
+}
+
 .img-skeleton {
   width: 100%;
   height: 100%;

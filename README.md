@@ -173,6 +173,12 @@ password with each request (`Authorization: Basic base64(user:pass)`), e.g. `cur
 | GET    | `/api/moments/mine`        | Yes  | Only my moments                          |
 | GET    | `/api/moments/{id}`        | Yes  | A single moment (if visible to me)       |
 | GET    | `/api/moments/{id}/image`  | Yes  | The image bytes                          |
+| POST   | `/api/moments/{id}/reactions` | Yes | React to a moment (JSON `{ "emoji": "❤️" }`); reacting again changes the emoji |
+| DELETE | `/api/moments/{id}/reactions` | Yes | Remove my reaction from a moment        |
+
+Each moment in the feed/`mine`/single responses now carries a `reactions` array (each with the
+reacting `user` and `emoji`) and `myReaction` (the emoji the current user reacted with, or
+`null`). A user can have at most one reaction per moment.
 
 ## Quick walkthrough (curl)
 
