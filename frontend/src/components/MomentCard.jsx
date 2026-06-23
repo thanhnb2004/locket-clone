@@ -10,6 +10,7 @@ export default function MomentCard({ moment: initialMoment }) {
   const { user } = useAuth()
   const [moment, setMoment] = useState(initialMoment)
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [viewerOpen, setViewerOpen] = useState(false)
   const [busy, setBusy] = useState(false)
 
   const reactions = moment.reactions || []
@@ -55,21 +56,33 @@ export default function MomentCard({ moment: initialMoment }) {
         )}
       </div>
 
-      {/* Reaction chips + picker. You can react to friends' moments, not your own. */}
+      {/* Reaction chips + picker. You can react to friends' moments, not your own.
+          Tapping a chip on your own moment opens the list of who reacted instead. */}
       <div className="reaction-bar">
         {Object.entries(counts).map(([emoji, count]) => (
           <button
             key={emoji}
             type="button"
             className={`reaction-chip${moment.myReaction === emoji ? ' mine' : ''}`}
-            onClick={() => !isMine && choose(emoji)}
-            disabled={isMine || busy}
+            onClick={() => (isMine ? setViewerOpen(true) : choose(emoji))}
+            disabled={busy}
             title={reactions.filter((r) => r.emoji === emoji).map((r) => r.user.displayName).join(', ')}
           >
             <span className="reaction-emoji">{emoji}</span>
             <span className="reaction-count">{count}</span>
           </button>
         ))}
+
+        {reactions.length > 0 && (
+          <button
+            type="button"
+            className="reaction-viewers"
+            onClick={() => setViewerOpen(true)}
+            aria-label="Xem ai đã thả cảm xúc"
+          >
+            👀 {reactions.length}
+          </button>
+        )}
 
         {!isMine && (
           <div className="reaction-add-wrap">
@@ -109,6 +122,50 @@ export default function MomentCard({ moment: initialMoment }) {
           </span>
         </div>
       </div>
+
+      {viewerOpen && (
+        <div
+          className="reactors-overlay"
+          onClick={() => setViewerOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="reactors-sheet"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-label="Những người đã thả cảm xúc"
+          >
+            <div className="reactors-head">
+              <strong>Cảm xúc ({reactions.length})</strong>
+              <button
+                type="button"
+                className="reactors-close"
+                onClick={() => setViewerOpen(false)}
+                aria-label="Đóng"
+              >
+                ✕
+              </button>
+            </div>
+
+            {reactions.length === 0 ? (
+              <p className="muted center">Chưa có ai thả cảm xúc.</p>
+            ) : (
+              <ul className="reactors-list">
+                {reactions.map((r) => (
+                  <li className="reactor-row" key={r.id}>
+                    <div className="avatar small">{initials(r.user.displayName)}</div>
+                    <div className="friend-name">
+                      <strong>{r.user.displayName}</strong>
+                      <span className="muted">@{r.user.username}</span>
+                    </div>
+                    <span className="reactor-emoji">{r.emoji}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
     </article>
   )
 }

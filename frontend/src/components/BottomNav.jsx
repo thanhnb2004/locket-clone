@@ -8,8 +8,8 @@ export default function BottomNav() {
         <span className="nav-label">Khoảnh khắc</span>
       </NavLink>
 
-      <NavLink to="/" end className="nav-item nav-capture" aria-label="Chụp ảnh">
-        <span className="capture-dot" />
+      <NavLink to="/" end className="nav-item nav-capture" aria-label="Trang chủ">
+        <span className="capture-dot">🏠</span>
       </NavLink>
 
       <NavLink to="/friends" className="nav-item" aria-label="Bạn bè">
