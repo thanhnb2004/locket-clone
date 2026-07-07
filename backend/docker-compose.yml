@@ -1,5 +1,9 @@
-# Dev/test stack. Data is kept INSIDE the containers (no volumes, no host mounts),
-# so everything is wiped when the containers are removed (`docker compose down`).
+# Backend stack: Postgres + MinIO + Spring app.
+# Dev/test only. Data lives INSIDE the containers (no volumes), so it is wiped
+# on `docker compose down`.
+#
+# The frontend runs from ../frontend/docker-compose.yml and joins the shared
+# `locket-net` network below to reach the "app" service. Start this stack first.
 
 services:
   db:
@@ -11,6 +15,8 @@ services:
       POSTGRES_PASSWORD: locket
     ports:
       - "5432:5432"
+    networks:
+      - locket-net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U locket -d locket"]
       interval: 5s
@@ -27,10 +33,12 @@ services:
     ports:
       - "9000:9000"   # S3 API
       - "9001:9001"   # Web console (http://localhost:9001, login minioadmin/minioadmin)
+    networks:
+      - locket-net
 
   app:
     build:
-      context: ./backend
+      context: .
     container_name: locket-app
     image: n3thanh/locket-app:latest
     depends_on:
@@ -51,13 +59,10 @@ services:
       APP_S3_PATH_STYLE_ACCESS: "true"
     ports:
       - "8080:8080"
+    networks:
+      - locket-net
 
-  web:
-    build:
-      context: ./frontend
-    container_name: locket-web
-    image: n3thanh/locket-web:latest
-    depends_on:
-      - app
-    ports:
-      - "3000:80"   # open the app at http://localhost:3000
+# Shared network so the frontend compose can reach the "app" service by name.
+networks:
+  locket-net:
+    name: locket-net

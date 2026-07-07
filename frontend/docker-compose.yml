@@ -1,0 +1,22 @@
+# Frontend stack: nginx serving the built SPA and reverse-proxying /api/ to the
+# backend "app" service.
+#
+# Requires the backend stack (../backend/docker-compose.yml) to be running first,
+# because this joins its shared `locket-net` network to reach "app:8080".
+
+services:
+  web:
+    build:
+      context: .
+    container_name: locket-web
+    image: n3thanh/locket-web:latest
+    ports:
+      - "3000:80"   # open the app at http://localhost:3000
+    networks:
+      - locket-net
+
+# Join the network created by the backend compose (external = not created here).
+networks:
+  locket-net:
+    external: true
+    name: locket-net
