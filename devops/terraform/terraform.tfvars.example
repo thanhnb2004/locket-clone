@@ -1,0 +1,16 @@
+# Copy to terraform.tfvars and adjust.
+
+aws_region = "ap-southeast-1"
+project    = "locket"
+
+# Backend image (Docker Hub or ECR). CI (GitLab) should push this tag.
+backend_image         = "n3thanh/locket-app:latest"
+backend_desired_count = 2
+
+# Optional custom domain. Leave empty to use the *.cloudfront.net domain.
+# The hosted zone must already exist in Route 53.
+# domain_name      = "locket.example.com"
+# hosted_zone_name = "example.com"
+
+# Database sizing
+db_instance_class = "db.t4g.medium"

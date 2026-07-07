@@ -1,0 +1,13 @@
+# Local state & workspace files (use a remote backend for team use)
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Contains environment-specific values, possibly sensitive
+terraform.tfvars
+*.auto.tfvars
+
+# Plan output files
+*.tfplan
