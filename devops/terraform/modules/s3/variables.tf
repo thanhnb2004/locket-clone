@@ -10,6 +10,12 @@ variable "force_destroy" {
   default     = true
 }
 
+variable "versioning_enabled" {
+  description = "Enable object versioning. Leave off for the static-site bucket; turn on for the Terraform state bucket so state revisions can be rolled back."
+  type        = bool
+  default     = false
+}
+
 variable "attach_cloudfront_policy" {
   description = "Attach the OAC bucket policy granting the CloudFront distribution read access. This is the plan-time toggle; set true whenever cloudfront_distribution_arn is wired in (even if the ARN is only known after apply)."
   type        = bool

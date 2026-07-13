@@ -3,6 +3,18 @@ output "app_url" {
   value       = "https://${local.app_fqdn}"
 }
 
+# --- Terraform state backend -------------------------------------------------
+
+output "tf_state_bucket" {
+  description = "State bucket name — set as `bucket` in the backend \"s3\" block"
+  value       = module.tf_state.bucket_id
+}
+
+output "tf_state_lock_table" {
+  description = "Lock table name — set as `dynamodb_table` in the backend \"s3\" block"
+  value       = module.tf_state_lock.table_name
+}
+
 # --- Network -----------------------------------------------------------------
 
 output "vpc_id" {

@@ -9,6 +9,35 @@ locals {
   }
 }
 
+# Terraform state backend: reuses the S3 module (versioning on) plus a
+# DynamoDB table for state locking.
+module "tf_state" {
+  source = "../../modules/s3"
+
+  bucket_name        = var.tf_state_bucket_name
+  versioning_enabled = var.tf_state_versioning_enabled
+  force_destroy      = var.tf_state_force_destroy
+
+  tags = local.common_tags
+}
+
+module "tf_state_lock" {
+  source = "../../modules/dynamodb"
+
+  table_name   = var.tf_state_lock_table_name
+  billing_mode = var.tf_state_lock_billing_mode
+  hash_key     = "LockID"
+
+  attributes = [
+    {
+      name = "LockID"
+      type = "S"
+    }
+  ]
+
+  tags = local.common_tags
+}
+
 module "network" {
   source = "../../modules/network"
 
@@ -39,7 +68,7 @@ module "cert_manager" {
 
   domain_name         = local.app_fqdn
   zone_id             = module.route53.zone_id
-  wait_for_validation = true
+  wait_for_validation = var.wait_for_cert_validation
 
   tags = local.common_tags
 }
@@ -49,7 +78,7 @@ module "s3" {
 
   bucket_name                 = var.frontend_bucket_name
   force_destroy               = var.force_destroy
-  attach_cloudfront_policy    = true
+  attach_cloudfront_policy    = var.attach_cloudfront_policy
   cloudfront_distribution_arn = module.cloudfront.arn
 
   tags = local.common_tags
