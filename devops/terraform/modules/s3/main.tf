@@ -19,8 +19,8 @@ module "s3_bucket" {
     }
   }
 
-  attach_policy = var.cloudfront_distribution_arn != ""
-  policy = var.cloudfront_distribution_arn == "" ? null : jsonencode({
+  attach_policy = var.attach_cloudfront_policy
+  policy = var.attach_cloudfront_policy ? jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -28,7 +28,7 @@ module "s3_bucket" {
         Effect    = "Allow"
         Principal = { Service = "cloudfront.amazonaws.com" }
         Action    = "s3:GetObject"
-        Resource  = "_S3_BUCKET_ARN_/*"
+        Resource  = "arn:aws:s3:::${var.bucket_name}/*"
         Condition = {
           StringEquals = {
             "AWS:SourceArn" = var.cloudfront_distribution_arn
@@ -36,7 +36,7 @@ module "s3_bucket" {
         }
       }
     ]
-  })
+  }) : null
 
   tags = var.tags
 }

@@ -2,7 +2,6 @@ module "cloudfront" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "6.7.0"
 
-  comment             = var.comment
   enabled             = true
   is_ipv6_enabled     = true
   price_class         = var.price_class
@@ -12,7 +11,6 @@ module "cloudfront" {
 
   origin_access_control = {
     s3_oac = {
-      description      = "OAC for ${var.comment}"
       origin_type      = "s3"
       signing_behavior = "always"
       signing_protocol = "sigv4"

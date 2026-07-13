@@ -1,9 +1,3 @@
-variable "comment" {
-  description = "Distribution comment / name shown in the console"
-  type        = string
-  default     = "love.qitrang.id.vn - SPA"
-}
-
 variable "aliases" {
   description = "Custom domain aliases (CNAMEs) for the distribution"
   type        = list(string)

@@ -10,8 +10,14 @@ variable "force_destroy" {
   default     = true
 }
 
+variable "attach_cloudfront_policy" {
+  description = "Attach the OAC bucket policy granting the CloudFront distribution read access. This is the plan-time toggle; set true whenever cloudfront_distribution_arn is wired in (even if the ARN is only known after apply)."
+  type        = bool
+  default     = false
+}
+
 variable "cloudfront_distribution_arn" {
-  description = "ARN of the CloudFront distribution allowed to read this bucket via OAC. When empty, no bucket policy is attached (first-apply / standalone use)."
+  description = "ARN of the CloudFront distribution allowed to read this bucket via OAC. Used in the policy body only; may be an unknown (computed) value at plan time."
   type        = string
   default     = ""
 }
