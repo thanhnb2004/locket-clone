@@ -1,5 +1,7 @@
 # Locket Clone — AWS Infrastructure (Terraform)
 
+![Architecture diagram](docs/architecture.png)
+
 Terraform for the architecture diagram:
 
 ```
